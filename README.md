@@ -1,4 +1,4 @@
-# Chef My K Love - Patreon Members Blog
+# Chef MyKLove Portfolio with blog
 
 A full-stack portfolio + members-only blog with Patreon OAuth authentication. Features animated backgrounds, dynamic blog posts, and secure member access.
 
