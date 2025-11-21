@@ -403,7 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Login with Patreon
     loginBtn?.addEventListener('click', () => {
       // Redirect to backend auth endpoint (will redirect to /blog/blook.html after login)
-      window.location.href = 'http://localhost:3002/auth/patreon';
+      window.location.href = 'https://portfolio-and-blog-production.up.railway.app/auth/patreon';
     });
 
     // Close when clicking backdrop
