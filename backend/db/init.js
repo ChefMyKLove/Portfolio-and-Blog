@@ -5,6 +5,11 @@ async function initializeDatabase() {
   try {
     console.log('🗄️  Initializing database...');
 
+    // Drop existing tables to ensure a clean slate
+    await pool.query('DROP TABLE IF EXISTS blog_posts;');
+    await pool.query('DROP TABLE IF EXISTS users CASCADE;'); // Use CASCADE to drop dependent objects
+    console.log('✅ Existing tables dropped');
+
     // Create users table
     const createTableQuery = `
       CREATE TABLE IF NOT EXISTS users (

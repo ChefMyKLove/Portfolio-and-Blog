@@ -1,13 +1,25 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || 'postgresql://localhost/chefmyklove_blog'
-});
+let pool;
 
-pool.on('error', (err) => {
-  console.error('Unexpected error on idle client', err);
-});
+try {
+  pool = new Pool({
+    connectionString: process.env.DATABASE_URL || 'postgresql://localhost/chefmyklove_blog'
+  });
+
+  pool.on('error', (err) => {
+    console.error('Unexpected error on idle client', err);
+  });
+} catch (err) {
+  console.error('[DB_INIT_ERROR]', err.message);
+  // Create a dummy pool that will fail gracefully
+  pool = {
+    query: async () => {
+      throw new Error('Database not configured');
+    }
+  };
+}
 
 // Save or update user
 const saveUser = async (userData) => {

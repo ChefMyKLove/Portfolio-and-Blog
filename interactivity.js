@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const ArtCarousel = {
     init() {
-      const images = ['/Portfolio Assignment (nojs)/images/IMG_6795.JPEG','/Portfolio Assignment (nojs)/images/IMG_6797.JPEG','/Portfolio Assignment (nojs)/images/IMG_6910.JPEG'];
+      const images = ['images/IMG_6795.JPEG','images/IMG_6797.JPEG','images/IMG_6910.JPEG'];
       const inner = document.getElementById('art-carousel-inner');
       let idx = 0;
 
@@ -402,8 +402,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Login with Patreon
     loginBtn?.addEventListener('click', () => {
-      // Redirect to backend auth endpoint (will redirect to /blog/blook.html after login)
-      window.location.href = 'https://portfolio-and-blog-production.up.railway.app/auth/patreon';
+      console.log('Patreon login clicked');
+      const backendUrl = 'https://portfolio-and-blog-production.up.railway.app/auth/patreon';
+      console.log('Redirecting to:', backendUrl);
+      window.location.href = backendUrl;
     });
 
     // Close when clicking backdrop

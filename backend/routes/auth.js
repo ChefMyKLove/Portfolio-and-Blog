@@ -6,19 +6,38 @@ const { URLSearchParams } = require('url');
 
 const CLIENT_ID = process.env.PATREON_CLIENT_ID;
 const CLIENT_SECRET = process.env.PATREON_CLIENT_SECRET;
-const REDIRECT_URI = process.env.PATREON_REDIRECT_URI || 'http://localhost:3002/auth/patreon/callback';
+const REDIRECT_URI = 'https://portfolio-and-blog-production.up.railway.app/auth/patreon/callback';
 const PATREON_AUTH_URL = 'https://www.patreon.com/oauth2/authorize';
 const PATREON_TOKEN_URL = 'https://www.patreon.com/api/oauth2/token';
 const PATREON_API_URL = 'https://www.patreon.com/api/oauth2/v2/identity';
 
-// Step 1: Redirect user to Patreon login
 router.get('/patreon', (req, res) => {
-  const state = Math.random().toString(36).substring(7);
-  req.session.oauthState = state;
-  
-  const authUrl = `${PATREON_AUTH_URL}?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=identity%20identity[email]&state=${state}`;
-  
-  res.redirect(authUrl);
+  try {
+    console.log('=== /patreon endpoint ===');
+    console.log('CLIENT_ID:', CLIENT_ID);
+    console.log('CLIENT_SECRET:', CLIENT_SECRET ? '***set***' : 'UNDEFINED');
+    console.log('REDIRECT_URI:', REDIRECT_URI);
+    
+    if (!CLIENT_ID || !CLIENT_SECRET) {
+      console.error('Missing credentials!');
+      return res.status(400).json({ 
+        error: 'Patreon credentials missing',
+        clientId: !!CLIENT_ID,
+        clientSecret: !!CLIENT_SECRET,
+        redirectUri: REDIRECT_URI
+      });
+    }
+    
+    const state = Math.random().toString(36).substring(7);
+    req.session.oauthState = state;
+    
+    const authUrl = `${PATREON_AUTH_URL}?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=identity%20identity[email]&state=${state}`;
+    console.log('Redirecting to Patreon auth URL');
+    res.redirect(authUrl);
+  } catch (error) {
+    console.error('ERROR in /patreon:', error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Step 2: Handle callback from Patreon
