@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Lazy load background images after page is ready
+  setTimeout(() => {
+    document.body.classList.add('images-loaded');
+  }, 100);
+
   const params = new URLSearchParams(window.location.search);
   const isPatron = params.get('patron') === 'true';
 
@@ -12,26 +17,89 @@ document.addEventListener('DOMContentLoaded', () => {
   let editingPost = null;
   let editingInfo = null;
 
-  // Ensure "about me" post exists
-  if (!posts.some(p => p.title === 'about me')) {
-    const aboutPost = {
-      id: '1',
-      title: 'about me',
-      content: `A journey inward is a journey through time. Through my own explorations with consciousness, I've learned that connection is the most fundamental aspect of existence. This blog is a space to share insights about spirituality, philosophy, and the nature of being.
-
-Each post is a reflection on the mysteries of life and our place within the cosmic whole. I believe that by sharing our experiences and questions, we create a bridge of understanding with one another.
-
-Welcome to the journey.`,
-      date: new Date().toISOString()
-    };
-    posts.unshift(aboutPost);
-    localStorage.setItem('mysticPosts', JSON.stringify(posts));
-  }
-
   function requireAuth(callback) {
     const pass = prompt("Password:");
     if (pass === 'mystic') callback();
     else alert("Wrong password");
+  }
+
+  // Rich text formatting functions
+  window.formatText = function(command) {
+    const editor = document.getElementById('post-content');
+    editor.focus();
+    
+    switch(command) {
+      case 'bold':
+        document.execCommand('bold', false, null);
+        break;
+      case 'italic':
+        document.execCommand('italic', false, null);
+        break;
+      case 'underline':
+        document.execCommand('underline', false, null);
+        break;
+      case 'h2':
+        document.execCommand('formatBlock', false, '<h2>');
+        break;
+      case 'h3':
+        document.execCommand('formatBlock', false, '<h3>');
+        break;
+      case 'ul':
+        document.execCommand('insertUnorderedList', false, null);
+        break;
+      case 'ol':
+        document.execCommand('insertOrderedList', false, null);
+        break;
+      case 'link':
+        const url = prompt('Enter URL:');
+        if (url) document.execCommand('createLink', false, url);
+        break;
+      case 'quote':
+        document.execCommand('formatBlock', false, '<blockquote>');
+        break;
+      case 'hr':
+        document.execCommand('insertHorizontalRule', false, null);
+        break;
+    }
+  }
+
+  window.formatInfoText = function(command) {
+    const editor = document.getElementById('info-body');
+    editor.focus();
+    
+    switch(command) {
+      case 'bold':
+        document.execCommand('bold', false, null);
+        break;
+      case 'italic':
+        document.execCommand('italic', false, null);
+        break;
+      case 'underline':
+        document.execCommand('underline', false, null);
+        break;
+      case 'h2':
+        document.execCommand('formatBlock', false, '<h2>');
+        break;
+      case 'h3':
+        document.execCommand('formatBlock', false, '<h3>');
+        break;
+      case 'ul':
+        document.execCommand('insertUnorderedList', false, null);
+        break;
+      case 'ol':
+        document.execCommand('insertOrderedList', false, null);
+        break;
+      case 'link':
+        const url = prompt('Enter URL:');
+        if (url) document.execCommand('createLink', false, url);
+        break;
+      case 'quote':
+        document.execCommand('formatBlock', false, '<blockquote>');
+        break;
+      case 'hr':
+        document.execCommand('insertHorizontalRule', false, null);
+        break;
+    }
   }
 
   window.openWriteModal = function() {
@@ -46,7 +114,7 @@ Welcome to the journey.`,
     closeWriteModal();
     document.getElementById('editor').style.display = 'flex';
     document.getElementById('post-title').value = '';
-    document.getElementById('post-content').value = '';
+    document.getElementById('post-content').innerHTML = '';
     document.getElementById('editor-title').textContent = 'Write Blog Post';
     document.getElementById('delete-btn').style.display = 'none';
     editingPost = null;
@@ -56,7 +124,7 @@ Welcome to the journey.`,
     closeWriteModal();
     document.getElementById('info-editor').style.display = 'flex';
     document.getElementById('info-name').value = '';
-    document.getElementById('info-body').value = '';
+    document.getElementById('info-body').innerHTML = '';
     document.getElementById('info-title').textContent = 'Add Info Page';
     document.getElementById('info-delete').style.display = 'none';
     editingInfo = null;
@@ -71,12 +139,37 @@ Welcome to the journey.`,
 
   window.showPost = function(id) {
     const p = posts.find(x => x.id == id);
+    // Sort oldest first for navigation (same as Contents)
+    const chronological = [...posts].sort((a,b) => new Date(a.date) - new Date(b.date));
+    const currentIndex = chronological.findIndex(x => x.id == id);
+    const prevPost = currentIndex > 0 ? chronological[currentIndex - 1] : null;
+    const nextPost = currentIndex < chronological.length - 1 ? chronological[currentIndex + 1] : null;
+    
     document.getElementById('single-content').innerHTML = `
-      <h1 style="color:#dcfca1;">${p.title}</h1>
-      <div style="color:#667eea;margin-bottom:20px;">${new Date(p.date).toLocaleDateString()}</div>
-      <div style="line-height:1.8;">${p.content.replace(/\n/g, '<br>')}</div>
-      <br><a href="#" onclick="editPost('${id}')" style="color:#667eea;">edit</a>
+      <h1 style="color:#fff;">${p.title}</h1>
+      <div class="rainbow-date">${new Date(p.date).toLocaleDateString()}</div>
+      <div style="line-height:1.8;">${p.content}</div>
+      <br><a href="#" onclick="editPost('${id}')" class="edit-link">edit</a>
     `;
+    
+    // Set up prev/next navigation
+    const prevBtn = document.getElementById('prev-post');
+    const nextBtn = document.getElementById('next-post');
+    
+    if (prevPost) {
+      prevBtn.style.visibility = 'visible';
+      prevBtn.onclick = (e) => { e.preventDefault(); showPost(prevPost.id); };
+    } else {
+      prevBtn.style.visibility = 'hidden';
+    }
+    
+    if (nextPost) {
+      nextBtn.style.visibility = 'visible';
+      nextBtn.onclick = (e) => { e.preventDefault(); showPost(nextPost.id); };
+    } else {
+      nextBtn.style.visibility = 'hidden';
+    }
+    
     document.getElementById('home-view').style.display = 'none';
     document.getElementById('single-post').style.display = 'block';
     window.scrollTo(0, 0);
@@ -85,13 +178,20 @@ Welcome to the journey.`,
   window.showInfo = function(id) {
     const p = infoPages.find(x => x.id == id);
     document.getElementById('info-content').innerHTML = `
-      <h1 style="color:#dcfca1;">${p.name}</h1>
-      <div style="line-height:1.8;">${p.body.replace(/\n/g, '<br>')}</div>
-      <br><a href="#" onclick="editInfo('${id}')" style="color:#667eea;">edit</a>
+      <h1 style="color:#fff;">${p.name}</h1>
+      <div style="line-height:1.8;">${p.body}</div>
+      <br><a href="#" onclick="editInfo('${id}')" class="edit-link">edit</a>
     `;
     document.getElementById('home-view').style.display = 'none';
     document.getElementById('info-page').style.display = 'block';
     window.scrollTo(0, 0);
+  }
+
+  // Helper to strip HTML for excerpts
+  function stripHtml(html) {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || '';
   }
 
   function render() {
@@ -99,38 +199,53 @@ Welcome to the journey.`,
     const latest = sorted[0];
 
     if (latest) {
-      document.getElementById('latest-excerpt').textContent = latest.content.substring(0, 180) + (latest.content.length > 180 ? '...' : '');
+      const plainText = stripHtml(latest.content);
+      document.getElementById('latest-excerpt').textContent = plainText.substring(0, 180) + (plainText.length > 180 ? '...' : '');
       document.getElementById('latest-date').textContent = `(${new Date(latest.date).toLocaleDateString()})`;
+      
+      // Make "Latest installment" clickable (keep the text as is)
+      const latestTitle = document.getElementById('latest-title');
+      if(latestTitle) {
+        latestTitle.onclick = e => { e.preventDefault(); showPost(latest.id); };
+      }
+      
       const readMore = document.getElementById('read-more');
       if(readMore) readMore.onclick = e => { e.preventDefault(); showPost(latest.id); };
     } else {
       document.getElementById('latest-excerpt').textContent = 'Begin your journey...';
     }
 
-    document.getElementById('post-list').innerHTML = sorted.map(p => 
+    // Contents: oldest first (chronological order for reading the story)
+    const chronological = [...posts].sort((a,b) => new Date(a.date) - new Date(b.date));
+    document.getElementById('post-list').innerHTML = chronological.map(p => 
       `<a href="#" onclick="event.preventDefault(); showPost('${p.id}')">${p.title}</a>`
     ).join('');
 
-    document.getElementById('posts-container').innerHTML = sorted.map(p => `
+    document.getElementById('posts-container').innerHTML = sorted.map(p => {
+      const plainText = stripHtml(p.content);
+      return `
       <div class="post">
         <h3><a href="#" onclick="event.preventDefault(); showPost('${p.id}')">${p.title}</a></h3>
         <div class="date">${new Date(p.date).toLocaleDateString()}</div>
-        <p>${p.content.substring(0, 300)}${p.content.length > 300 ? '...' : ''}</p>
+        <p>${plainText.substring(0, 300)}${plainText.length > 300 ? '...' : ''}</p>
         <a href="#" onclick="event.preventDefault(); editPost('${p.id}')">edit</a>
       </div>
-    `).join('');
+    `}).join('');
 
     const infoHTML = infoPages.map(p => 
-      `<a href="#" onclick="event.preventDefault(); showInfo('${p.id}')">${p.name}</a>`
-    ).join('<br>');
-    document.getElementById('info-list').innerHTML = 
-      `<span class="write-btn" onclick="openWriteModal()">+ Write Post or Info</span><br>` + infoHTML;
+      `<a href="#" class="info-link" onclick="event.preventDefault(); showInfo('${p.id}')">${p.name}</a>`
+    ).join('');
+    
+    // Show info pages ABOVE the admin button
+    const infoListEl = document.getElementById('info-list');
+    infoListEl.innerHTML = infoHTML + 
+      `<span class="admin-btn" onclick="openWriteModal()">Admin</span>`;
   }
 
   window.closeEditor = function() { document.getElementById('editor').style.display = 'none'; }
   window.savePost = function() {
     const title = document.getElementById('post-title').value.trim();
-    const content = document.getElementById('post-content').value.trim();
+    const content = document.getElementById('post-content').innerHTML.trim();
     if (!title || !content) return alert('Required');
     if (editingPost) {
       const idx = posts.findIndex(p => p.id == editingPost);
@@ -148,7 +263,7 @@ Welcome to the journey.`,
       const p = posts.find(x => x.id == id);
       editingPost = id;
       document.getElementById('post-title').value = p.title;
-      document.getElementById('post-content').value = p.content;
+      document.getElementById('post-content').innerHTML = p.content;
       document.getElementById('editor-title').textContent = 'Edit Post';
       document.getElementById('delete-btn').style.display = 'inline-block';
       document.getElementById('editor').style.display = 'flex';
@@ -167,7 +282,7 @@ Welcome to the journey.`,
   window.closeInfoEditor = function() { document.getElementById('info-editor').style.display = 'none'; }
   window.saveInfo = function() {
     const name = document.getElementById('info-name').value.trim();
-    const body = document.getElementById('info-body').value.trim();
+    const body = document.getElementById('info-body').innerHTML.trim();
     if (!name || !body) return alert('Required');
     if (editingInfo) {
       const idx = infoPages.findIndex(p => p.id == editingInfo);
@@ -184,7 +299,7 @@ Welcome to the journey.`,
       const p = infoPages.find(x => x.id == id);
       editingInfo = id;
       document.getElementById('info-name').value = p.name;
-      document.getElementById('info-body').value = p.body;
+      document.getElementById('info-body').innerHTML = p.body;
       document.getElementById('info-title').textContent = 'Edit Info Page';
       document.getElementById('info-delete').style.display = 'inline-block';
       document.getElementById('info-editor').style.display = 'flex';

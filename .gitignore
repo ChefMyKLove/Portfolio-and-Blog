@@ -2,6 +2,11 @@
 .env
 .env.local
 .env.*.local
+.env.printful
+
+# API Keys (NEVER COMMIT THESE!)
+*api*key*
+*API*KEY*
 
 # Node
 node_modules/

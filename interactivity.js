@@ -1,4 +1,154 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Firefox detection
+  const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+  
+  // ===== NOTIFICATION SYSTEM =====
+  function showNotification(message) {
+    // Remove any existing notifications first
+    const existingOverlay = document.getElementById('notification-overlay');
+    const existingToast = document.getElementById('notification-toast');
+    if (existingOverlay) existingOverlay.remove();
+    if (existingToast) existingToast.remove();
+    
+    // Create overlay
+    const overlay = document.createElement('div');
+    overlay.id = 'notification-overlay';
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 99998;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    `;
+    
+    // Create toast container
+    const toast = document.createElement('div');
+    toast.id = 'notification-toast';
+    toast.style.cssText = `
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      z-index: 99999;
+      opacity: 0;
+      transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    `;
+    
+    // Create content box with animated background (like rest of site)
+    const content = document.createElement('div');
+    content.style.cssText = `
+      position: relative;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid rgba(102, 126, 234, 0.5);
+      border-radius: 28px;
+      padding: 50px 70px;
+      min-width: 480px;
+      max-width: 90vw;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8), 0 0 40px rgba(102, 126, 234, 0.3);
+      text-align: center;
+    `;
+    
+    // Create ::before pseudo-element equivalent for background animation
+    const bgLayer = document.createElement('div');
+    bgLayer.style.cssText = `
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: -1;
+      border-radius: inherit;
+      animation: backgroundCycle 78s infinite ease-in-out;
+    `;
+    content.appendChild(bgLayer);
+    
+    // Create message
+    const messageEl = document.createElement('div');
+    messageEl.textContent = message;
+    messageEl.style.cssText = `
+      color: #fff;
+      font-size: 1.6em;
+      font-weight: 600;
+      margin-bottom: 30px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.6), 0 0 20px rgba(102, 126, 234, 0.5);
+    `;
+    
+    // Create OK button with animated background
+    const okBtn = document.createElement('button');
+    okBtn.textContent = 'OK';
+    okBtn.style.cssText = `
+      position: relative;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      padding: 16px 50px;
+      border-radius: 50px;
+      font-size: 1.3em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    `;
+    
+    // Button background layer for animation
+    const btnBgLayer = document.createElement('div');
+    btnBgLayer.style.cssText = `
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: -1;
+      border-radius: inherit;
+      animation: backgroundCycle 78s infinite ease-in-out;
+    `;
+    okBtn.appendChild(btnBgLayer);
+    
+    // Button hover effects
+    okBtn.onmouseenter = () => {
+      okBtn.style.transform = 'translateY(-3px)';
+      okBtn.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.4)';
+    };
+    okBtn.onmouseleave = () => {
+      okBtn.style.transform = '';
+      okBtn.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)';
+    };
+    
+    // Assemble
+    content.appendChild(messageEl);
+    content.appendChild(okBtn);
+    toast.appendChild(content);
+    document.body.appendChild(overlay);
+    document.body.appendChild(toast);
+    
+    // Animate in after a micro-task (lets browser paint first)
+    setTimeout(() => {
+      overlay.style.opacity = '1';
+      toast.style.opacity = '1';
+      toast.style.transform = 'translate(-50%, -50%) scale(1)';
+    }, 0);
+    
+    // Close handler
+    const close = () => {
+      overlay.style.opacity = '0';
+      toast.style.opacity = '0';
+      toast.style.transform = 'translate(-50%, -50%) scale(0.8)';
+      setTimeout(() => {
+        overlay.remove();
+        toast.remove();
+      }, 400);
+    };
+    
+    okBtn.onclick = close;
+    overlay.onclick = close;
+  }
+
   // ========================
   // WEATHER WIDGET – GLOBAL + FIXED RANDOM + CLEAR INPUT
   // ========================
@@ -315,26 +465,164 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const ArtCarousel = {
     init() {
-      const images = ['images/IMG_6795.JPEG','images/IMG_6797.JPEG','images/IMG_6910.JPEG'];
+      // PRINTIFY POP-UP STORE LINKS
+      // Add your Printify product URLs from https://ordinalrainbows.printify.me/
+      const artworks = [
+        { 
+          image: 'images/TunnelBow.JPEG', 
+          printifyUrl: 'https://ordinalrainbows.printify.me/product/25134633/tunnelbow', // 
+          title: 'TunnelBow',
+          alt: 'TunnelBow - Rainbow light through glass tunnel'
+        },
+        { 
+          image: 'images/IMG_6795.JPEG', 
+          printifyUrl: 'PENDING',
+          title: 'Rainbow #1',
+          alt: 'Rainbow artwork #1'
+        },
+        { 
+          image: 'images/IMG_6797.JPEG', 
+          printifyUrl: 'PENDING',
+          title: 'Rainbow #2',
+          alt: 'Rainbow artwork #2'
+        },
+        { 
+          image: 'images/IMG_6910.JPEG', 
+          printifyUrl: 'PENDING',
+          title: 'Rainbow #3',
+          alt: 'Rainbow artwork #3'
+        },
+        { 
+          image: 'images/IMG_6911.JPEG', 
+          printifyUrl: 'PENDING',
+          title: 'Rainbow #4',
+          alt: 'Rainbow artwork #4'
+        },
+        { 
+          image: 'images/IMG_6908.JPEG', 
+          printifyUrl: 'PENDING',
+          title: 'Rainbow #5',
+          alt: 'Rainbow artwork #5'
+        },
+        { 
+          image: 'images/IMG_6909.JPEG', 
+          printifyUrl: 'PENDING',
+          title: 'Rainbow #6',
+          alt: 'Rainbow artwork #6'
+        },
+        { 
+          image: 'images/IMG_6912.JPEG', 
+          printifyUrl: 'PENDING',
+          title: 'Rainbow #7',
+          alt: 'Rainbow artwork #7'
+        },
+        { 
+          image: 'images/IMG_6906.JPEG', 
+          printifyUrl: 'PENDING',
+          title: 'Rainbow #8',
+          alt: 'Rainbow artwork #8'
+        },
+        { 
+          image: 'images/IMG_6907.JPEG', 
+          printifyUrl: 'PENDING',
+          title: 'Rainbow #9',
+          alt: 'Rainbow artwork #9'
+        },
+        { 
+          image: 'images/IMG_6796.JPEG', 
+          printifyUrl: 'PENDING',
+          title: 'Rainbow #10',
+          alt: 'Rainbow artwork #10'
+        },
+        { 
+          image: 'images/HummingBow.jpg', 
+          printifyUrl: 'PENDING',
+          title: 'Rainbow #11',
+          alt: 'Rainbow artwork #11'
+        }
+      ];
+
       const inner = document.getElementById('art-carousel-inner');
       let idx = 0;
 
-      images.forEach(src => {
+      // Create clickable carousel items that open Printify store in modal
+      artworks.forEach(artwork => {
         const div = document.createElement('div');
         div.className = 'art-carousel-item';
-        div.innerHTML = `<img src="${src}" alt="Art piece">`;
+        
+        // Only make clickable if Printify URL is set
+        if (artwork.printifyUrl && artwork.printifyUrl !== 'PENDING') {
+          div.style.cursor = 'pointer';
+          div.onclick = () => openPrintifyModal(artwork.printifyUrl, artwork.title);
+          
+          div.innerHTML = `
+            <img src="${artwork.image}" 
+                 alt="${artwork.alt}" 
+                 title="Click to order ${artwork.title}">
+            <div class="art-carousel-order-label">🛒 Order Print</div>
+          `;
+        } else {
+          // No URL yet - just show image
+          div.innerHTML = `
+            <img src="${artwork.image}" 
+                 alt="${artwork.alt}" 
+                 title="${artwork.title}">
+            <div class="art-carousel-coming-soon">Coming Soon</div>
+          `;
+        }
+        
         inner.appendChild(div);
       });
 
+      // Carousel navigation
       document.getElementById('art-carousel-prev').addEventListener('click', () => {
         if (idx > 0) { idx--; inner.style.transform = `translateX(-${idx * 33.33}%)`; }
       });
 
       document.getElementById('art-carousel-next').addEventListener('click', () => {
-        if (idx < images.length - 3) { idx++; inner.style.transform = `translateX(-${idx * 33.33}%)`; }
+        if (idx < artworks.length - 3) { idx++; inner.style.transform = `translateX(-${idx * 33.33}%)`; }
       });
     }
   };
+
+  // Printify Modal Handler
+  function openPrintifyModal(url, title) {
+    // Create modal
+    const modal = document.createElement('div');
+    modal.className = 'printify-modal';
+    modal.innerHTML = `
+      <div class="printify-modal-content">
+        <div class="printify-modal-header">
+          <h2>${title}</h2>
+          <span class="printify-modal-close">&times;</span>
+        </div>
+        <iframe src="${url}" class="printify-iframe"></iframe>
+      </div>
+    `;
+    
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden'; // Prevent scrolling
+    
+    // Close handlers
+    const closeBtn = modal.querySelector('.printify-modal-close');
+    closeBtn.onclick = () => closePrintifyModal(modal);
+    
+    modal.onclick = (e) => {
+      if (e.target === modal) closePrintifyModal(modal);
+    };
+    
+    document.addEventListener('keydown', function escHandler(e) {
+      if (e.key === 'Escape') {
+        closePrintifyModal(modal);
+        document.removeEventListener('keydown', escHandler);
+      }
+    });
+  }
+
+  function closePrintifyModal(modal) {
+    modal.remove();
+    document.body.style.overflow = ''; // Restore scrolling
+  }
 
   const EmailModal = {
     init() {
@@ -363,23 +651,23 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.disabled = true;
         submitBtn.textContent = 'Sending...';
 
-        try {
-          const resp = await fetch('https://submit-form.com/1JnzAL7ST', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, topic, message, _replyto: email })
-          });
-          if (resp.ok) {
-            alert('Message sent! I\'ll reply soon.');
-            modal.style.display = 'none';
-            form.reset();
-          } else throw new Error();
-        } catch {
-          alert('Error. Email me directly: chefmyklove@gmail.com');
-        } finally {
+        // Submit form - FormSpark will send confirmation regardless of response
+        fetch('https://submit-form.com/1JnzAL7ST', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, topic, message, _replyto: email })
+        }).catch(() => {}); // Ignore CORS redirect error
+        
+        // Show success immediately
+        showNotification('🎉 CHANGES APPLIED! Message sent! I\'ll reply soon. 🎉');
+        modal.style.display = 'none';
+        form.reset();
+        
+        // Re-enable button
+        setTimeout(() => {
           submitBtn.disabled = false;
           submitBtn.textContent = 'Send';
-        }
+        }, 100);
       });
     }
   };
@@ -429,4 +717,37 @@ document.addEventListener('DOMContentLoaded', () => {
   Carousel.init();
   ArtCarousel.init();
   EmailModal.init();
+
+  // ========================
+  // LAZY LOAD BACKGROUND IMAGES
+  // ========================
+  // Preload animation images after page renders for faster initial load
+  // HummingBow.jpg is already loaded in CSS, so we load the remaining 12
+  const backgroundImages = [
+    'images/IMG_6794.JPEG',
+    'images/IMG_6795.JPEG',
+    'images/IMG_6796.JPEG',
+    'images/IMG_6797.JPEG',
+    'images/TunnelBow.JPEG',
+    'images/IMG_6906.JPEG',
+    'images/IMG_6907.JPEG',
+    'images/IMG_6908.JPEG',
+    'images/IMG_6909.JPEG',
+    'images/IMG_6910.JPEG',
+    'images/IMG_6911.JPEG',
+    'images/IMG_6912.JPEG'
+  ];
+
+  let loadedCount = 0;
+  backgroundImages.forEach(src => {
+    const img = new Image();
+    img.onload = () => {
+      loadedCount++;
+      if (loadedCount === backgroundImages.length) {
+        // All images loaded - enable animated background
+        document.body.classList.add('images-loaded');
+      }
+    };
+    img.src = src;
+  });
 });

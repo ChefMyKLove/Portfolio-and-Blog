@@ -1,63 +1,109 @@
-# Chef MyKLove Portfolio with blog
+# Chef MyKLove Portfolio with Blog & Print Store
 
-A full-stack portfolio + members-only blog with Patreon OAuth authentication. Features animated backgrounds, dynamic blog posts, and secure member access.
+A full-stack portfolio + members-only blog with Patreon OAuth authentication and Printify Pop-Up Store integration. Features glassmorphism design, animated cycling backgrounds, dynamic blog posts, secure member access, and print-on-demand artwork sales.
 
 ## Project Structure
 
 ```
 chefmyklove-portfolio/
-├── frontend/                 # Portfolio + Blog (Port 8000)
-│   ├── portfolio.html       # Landing page with Patreon login
-│   ├── carousel.css         # Shared styling for animations
-│   ├── interactivity.js     # Portfolio interactions
-│   ├── blog/
-│   │   ├── blook.html       # Members-only blog page
-│   │   ├── carousel.css     # Blog-specific styling
-│   │   └── images/          # Background images for animations
-│   ├── images/              # Portfolio images
-│   └── members.html         # Members page (future)
+├── index.html               # Main portfolio landing page
+├── carousel.css             # Glassmorphism styling + animations
+├── interactivity.js         # Portfolio interactions + modals
+├── members.html             # Members redirect page
+├── PRINTIFY-SETUP.md        # Print store setup guide
 │
-├── backend/                  # Express API (Port 3002)
+├── images/                   # Artwork + background images
+│   ├── HummingBow.jpg       # Primary background image
+│   ├── TunnelBow.JPEG       # Featured artwork
+│   └── IMG_*.JPEG           # Carousel backgrounds (13 images)
+│
+├── blog/                     # Members-only blog
+│   ├── blook.html           # Blog interface
+│   ├── blook.js             # Blog logic
+│   ├── carousel.css         # Blog-specific styling
+│   └── images/              # Blog background images
+│
+├── backend/                  # Express API (Railway)
 │   ├── server.js            # Main server file
 │   ├── routes/
 │   │   ├── auth.js          # Patreon OAuth flow
-│   │   └── members.js       # Protected routes
+│   │   ├── members.js       # Protected routes
+│   │   └── printful.js      # Printful API (deprecated)
 │   ├── middleware/
 │   │   └── auth.js          # Authentication verification
 │   ├── db/
 │   │   ├── db.js            # PostgreSQL connection
 │   │   └── init.js          # Database schema setup
-│   ├── .env                 # Environment variables (not committed)
 │   ├── package.json
-│   └── node_modules/        # Dependencies
+│   └── .env                 # Environment variables (not committed)
 │
-└── docs/                     # Documentation
+└── docs/
     └── SETUP.md             # Setup instructions
 ```
 
 ## Features
 
-✅ **Patreon OAuth 2.0 Integration** - Secure member authentication
-✅ **Animated Backgrounds** - 17-image carousel with smooth transitions
-✅ **Dynamic Blog Posts** - Create, edit, delete posts (members only)
-✅ **Info Pages** - Additional content management
-✅ **Password Protection** - Create modal requires password verification
-✅ **Responsive Design** - Works on mobile and desktop
-✅ **External CSS** - Consolidated stylesheet for easy maintenance
+✅ **Glassmorphism Design** - Frosted glass aesthetic with `backdrop-filter: blur()` effects  
+✅ **Animated Cycling Backgrounds** - 13-image rainbow carousel with 104s smooth transitions  
+✅ **Printify Pop-Up Store Integration** - Print-on-demand artwork sales via modal embed  
+✅ **Patreon OAuth 2.0** - Secure member authentication for blog access  
+✅ **Dynamic Blog Posts** - Create, edit, delete posts (members only)  
+✅ **Weather Widget** - Real-time weather with geolocation + random cities  
+✅ **SoundCloud Music Player** - Embedded playlist with shuffle functionality  
+✅ **Email Contact Form** - FormSpark integration with topic selection  
+✅ **Responsive Design** - Mobile-friendly with optimized image lazy-loading  
+✅ **Art Portfolio Carousel** - 12 artworks with "Order Print" + "Coming Soon" labels
 
 ## Tech Stack
 
 **Frontend:**
 - HTML5, CSS3, Vanilla JavaScript
+- Glassmorphism effects with animated backgrounds
 - Bootstrap 5.3.8 (CDN)
-- http-server for local development
+- Lazy-loading optimization for 11MB background images
 
 **Backend:**
-- Node.js v24.11.0
-- Express.js 4.18.2
-- PostgreSQL 18
+- Node.js v24.11.0 + Express.js 4.18.2
+- PostgreSQL 18 (Railway hosted)
 - Patreon API (OAuth 2.0)
 - express-session (server-side sessions)
+- Deployed: `https://portfolio-and-blog-production.up.railway.app`
+
+**Print Store:**
+- Printify Pop-Up Store (free tier)
+- Stripe payment processing (via Printify)
+- Modal embed with glassmorphism styling
+- Store: `https://ordinalrainbows.printify.me/`
+
+**APIs:**
+- OpenWeatherMap (weather widget)
+- FormSpark (contact form)
+- SoundCloud (embedded player)
+
+## Glassmorphism Design System
+
+The site features a consistent **glassmorphism aesthetic**:
+
+**Core Elements:**
+- Frosted glass: `background: rgba(0, 0, 0, 0.5)` + `backdrop-filter: blur(200px)`
+- Animated backgrounds: 13 rainbow images cycling @ 104s
+- Purple glow: `box-shadow: 0 0 20px rgba(102, 126, 234, 0.3)`
+- Text shadows: `2px 2px 4px rgba(0, 0, 0, 0.8)` for readability
+- Smooth transitions: `0.3s ease` on all interactions
+
+**Applied To:** Header, sections, modals, widgets, carousel cards, buttons
+
+## Print Store (Printify Pop-Up)
+
+**Setup:** See `PRINTIFY-SETUP.md`
+
+**Flow:**
+1. Customer clicks artwork → Modal opens with Printify store
+2. Customer shops + pays via Stripe (on Printify platform)
+3. Printify deducts production cost → You keep profit
+4. Printify prints, ships, handles support
+
+**No fees, no credit card needed!**
 
 ## Quick Start
 

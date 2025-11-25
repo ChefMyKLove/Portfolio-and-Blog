@@ -4,27 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>into the mystic…</title>
-  <base href="/blog/">
 
-
-  <!-- PRELOAD ALL IMAGES — NO GLITCH -->
-  <link rel="preload" href="/blog/images/IMG_4570.jpg" as="image">
-  <link rel="preload" href="/blog/images/IMG_6794.JPEG" as="image">
-  <link rel="preload" href="/blog/images/IMG_6795.JPEG" as="image">
-  <link rel="preload" href="/blog/images/IMG_6796.JPEG" as="image">
-  <link rel="preload" href="/blog/images/IMG_6797.JPEG" as="image">
-  <link rel="preload" href="/blog/images/IMG_6905.JPEG" as="image">
-  <link rel="preload" href="/blog/images/IMG_6906.JPEG" as="image">
-  <link rel="preload" href="/blog/images/IMG_6907.JPEG" as="image">
-  <link rel="preload" href="/blog/images/IMG_6908.JPEG" as="image">
-  <link rel="preload" href="/blog/images/IMG_6909.JPEG" as="image">
-  <link rel="preload" href="/blog/images/IMG_6910.JPEG" as="image">
-  <link rel="preload" href="/blog/images/IMG_6911.JPEG" as="image">
-  <link rel="preload" href="/blog/images/IMG_6912.JPEG" as="image">
-
+  <!-- Only preload first image for fast initial load -->
+  <link rel="preload" href="../images/HummingBow.jpg" as="image">
 
   <!-- EXTERNAL STYLESHEET -->
-  <link rel="stylesheet" href="carousel.css">
   <link rel="stylesheet" href="style.css">
   
     <style>
@@ -88,7 +72,7 @@
 
         <div class="col">
           <div class="latest">
-            <h3>Latest installment <span class="date" id="latest-date"></span></h3>
+            <h3><a href="#" id="latest-title" class="latest-title-link">Latest installment</a> <span class="rainbow-date" id="latest-date"></span></h3>
             <p id="latest-excerpt">Begin your journey...</p>
             <a href="#" id="read-more">read more</a>
           </div>
@@ -113,12 +97,18 @@
 
     <div class="container" id="single-post" style="display:none;">
       <div id="single-content"></div>
-      <div class="back-to-top"><a href="#" onclick="showHome()">Back to top</a></div>
+      <div class="post-nav">
+        <a href="#" id="prev-post" class="nav-link">← Previous</a>
+        <a href="#" onclick="showHome()" class="nav-link home-link">Back to Blog</a>
+        <a href="#" id="next-post" class="nav-link">Next →</a>
+      </div>
     </div>
 
     <div class="container" id="info-page" style="display:none;">
       <div id="info-content"></div>
-      <div class="back-to-top"><a href="#" onclick="showHome()">Back to top</a></div>
+      <div class="post-nav">
+        <a href="#" onclick="showHome()" class="nav-link home-link">Back to Blog</a>
+      </div>
     </div>
 
     <div id="write-modal">
@@ -135,7 +125,22 @@
       <div class="editor-box">
         <h2 id="editor-title">Write Blog Post</h2>
         <input type="text" id="post-title" placeholder="Title...">
-        <textarea id="post-content" placeholder="Your journey..."></textarea>
+        <div class="editor-toolbar">
+          <button type="button" onclick="formatText('bold')" title="Bold"><b>B</b></button>
+          <button type="button" onclick="formatText('italic')" title="Italic"><i>I</i></button>
+          <button type="button" onclick="formatText('underline')" title="Underline"><u>U</u></button>
+          <span class="toolbar-divider"></span>
+          <button type="button" onclick="formatText('h2')" title="Heading">H</button>
+          <button type="button" onclick="formatText('h3')" title="Subheading">h</button>
+          <span class="toolbar-divider"></span>
+          <button type="button" onclick="formatText('ul')" title="Bullet List">•</button>
+          <button type="button" onclick="formatText('ol')" title="Numbered List">1.</button>
+          <span class="toolbar-divider"></span>
+          <button type="button" onclick="formatText('link')" title="Insert Link">🔗</button>
+          <button type="button" onclick="formatText('quote')" title="Quote">❝</button>
+          <button type="button" onclick="formatText('hr')" title="Divider">―</button>
+        </div>
+        <div id="post-content" class="rich-editor" contenteditable="true" placeholder="Your journey..."></div>
         <button onclick="savePost()">Publish</button>
         <button class="delete-btn" id="delete-btn" style="display:none;" onclick="deletePost()">Delete</button>
         <button onclick="closeEditor()">Close</button>
@@ -146,7 +151,22 @@
       <div class="editor-box">
         <h2 id="info-title">Add Info Page</h2>
         <input type="text" id="info-name" placeholder="Page name...">
-        <textarea id="info-body" placeholder="Content..."></textarea>
+        <div class="editor-toolbar">
+          <button type="button" onclick="formatInfoText('bold')" title="Bold"><b>B</b></button>
+          <button type="button" onclick="formatInfoText('italic')" title="Italic"><i>I</i></button>
+          <button type="button" onclick="formatInfoText('underline')" title="Underline"><u>U</u></button>
+          <span class="toolbar-divider"></span>
+          <button type="button" onclick="formatInfoText('h2')" title="Heading">H</button>
+          <button type="button" onclick="formatInfoText('h3')" title="Subheading">h</button>
+          <span class="toolbar-divider"></span>
+          <button type="button" onclick="formatInfoText('ul')" title="Bullet List">•</button>
+          <button type="button" onclick="formatInfoText('ol')" title="Numbered List">1.</button>
+          <span class="toolbar-divider"></span>
+          <button type="button" onclick="formatInfoText('link')" title="Insert Link">🔗</button>
+          <button type="button" onclick="formatInfoText('quote')" title="Quote">❝</button>
+          <button type="button" onclick="formatInfoText('hr')" title="Divider">―</button>
+        </div>
+        <div id="info-body" class="rich-editor" contenteditable="true" placeholder="Content..."></div>
         <button onclick="saveInfo()">Save</button>
         <button class="delete-btn" id="info-delete" style="display:none;" onclick="deleteInfo()">Delete</button>
         <button onclick="closeInfoEditor()">Close</button>

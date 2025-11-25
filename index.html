@@ -6,13 +6,13 @@
  <title>Portfolio</title>
  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
- <link rel="stylesheet" href="carousel.css">
+ <link rel="stylesheet" href="carousel.css?v=2024112404">
 </head>
 <body>
  <header id="top">
  <h1>Michael A. Needham</h1>
- <h3>Chef MyKLove - Digital Artist, Activist and Developer</h3>
- <p>Check Out What I'm Up To By Clicking on the Carousel Cards or the Buttons Below.</p>
+ <h3>Chef MyKLove - Digital Artist, Developer and Activist</h3>
+ <p>Welcome to My Portfolio. Click on the Carousel Cards or the Buttons Below.</p>
  <nav>
  <ul>
  <li><a href="#contact" class="nav-button">Contact</a></li>
@@ -99,6 +99,72 @@
  </div>
  </div>
 
+<section id="about-me">
+  <h2>About Me</h2>
+  <div class="section-grid">
+    
+    <!-- Left box – resume -->
+     <div class="box">
+      <h3>Resume</h3>
+      
+      <a href="https://www.linkedin.com/in/chefmyklove" target="_blank" rel="noopener" style="display: block; text-align: center;">
+        <img src="images/trim.F71E249B-14C7-4321-8A97-DCE3E1209023.gif" 
+             alt="Animation for a more just future" 
+             style="max-height: 500px; object-fit: contain; margin: 0 auto;">
+      </a>
+      
+      <p style="text-align: center; margin-top: 1rem;">
+        <a href="https://www.linkedin.com/in/chefmyklove" target="_blank" rel="noopener">
+          View Full Resume on LinkedIn →
+        </a>
+      </p>
+    </div>
+     <!-- Right box – Resume / GIF link -->
+    <div class="box">
+      <h3>My Journey</h3>
+      <p>A lifelong creative exploring media as diverse as sound sculpture, fibre art, painting, poetry, and soap making, my practice currently exists at the intersection of photography, digital manipulation, and blockchain-based community art. After three decades as a professional chef, a career-ending injury pushed me into software development—a shift that fundamentally changed my creative practice and kick-started an incredible new artistic odyssey.</p>
+
+<p>I discovered that debugging code, like recipe development, is about transformation: taking ideas and raw materials and reshaping them into something new that provides a nourishing experience. Software development offered something my earlier media couldn't—the ability to create work that scales, persists, and invites participation. Code lets me turn ideas into interactive experiences. Now I work creatively in this digital realm, treating technology as both medium and collaborator in building more inclusive digital spaces.</p>
+
+<p><a href="#whats-cooking">See what I'm cooking up</a></p>
+
+<p>What excites me is that this technology is a studio, a megaphone, and a toolkit all in one. It amplifies creativity, connects communities, and opens sustainable paths for artists who've been shut out of traditional systems. I'm building tools and experiences that let marginalized creators own their work, reach audiences directly, and thrive on their own terms—using code and blockchain as levers for real equity.</p>
+
+<img src="images/IMG_20201211_103947_047.png" 
+     alt="Portrait of Chef MyKLove" 
+     style="width: 100%; height: auto; border-radius: 10px; margin-top: 20px;">
+
+<p>As an artist and developer committed to social justice, I see technology as a way to dismantle gatekeeping and redistribute power. Our world maintains systemic barriers that keep too many people from accessing resources and opportunities. My work challenges that.</p>
+
+<p><strong>What that looks like in practice:</strong></p>
+<ul>
+  <li><strong>Creative Advocacy:</strong> Art and tech projects that amplify marginalized voices and challenge inequity.</li>
+  <li><strong>Inclusive Design:</strong> Tools and platforms built for accessibility, ensuring people of all abilities and backgrounds can participate.</li>
+  <li><strong>Alternative Economics:</strong> Community-driven platforms and revenue models that empower creators and redistribute resources.</li>
+  <li><strong>Civic Technology:</strong> Projects that advocate for environmental justice, equitable access, and inclusive public spaces.</li>
+  <li><strong>Community Empowerment:</strong> Collaborative spaces where diverse groups co-create solutions for a more just future.</li>
+</ul>
+
+<h3>Mission</h3>
+<p>My mission is to build tools, platforms, and creative experiences that dismantle barriers, redistribute power, and enable marginalized artists and communities to own their work, reach global audiences, and thrive. By working together and wielding technology as our ally, we can create the systemic changes that truly set us all free.</p>
+      <h3>Blog</h3>
+      <!-- Patreon + Members-only Blog Section (real links included) -->
+<div style="margin-top: 2rem; text-align: center;">
+  <p>
+    <a href="https://www.patreon.com/ChefMyKLove" target="_blank" rel="noopener" 
+       class="widget-btn" style="display: inline-block; margin: 5px;">
+      Support Me on Patreon by becoming a member.  It's free!!❤️
+    </a>
+  </p>
+
+  <button id="openBlogModal" class="widget-btn" style="display: inline-block; margin: 5px;">
+    Access Members-Only Blog
+  </button>
+</div>
+    </div>
+  </div>
+</section>
+
  <section id="contact">
  <h2>Contact</h2>
  <div class="section-grid">
@@ -137,7 +203,7 @@
     <option value="" disabled selected>Select a topic</option>
     <option value="Ordinal Rainbows">Tell me more about Ordinal Rainbows</option>
     <option value="Clean Air">Tell me more about Clean Air</option>
-    <option value="Other">Other</option>
+    <option value="Other">What is Spectral Quest?</option>
   </select>  <!-- MESSAGE -->
   <label for="email-message">Message <span style="color:#ff5500;">*</span>:</label>
   <textarea id="email-message" name="message" class="widget-input"
@@ -152,71 +218,28 @@
  <a href="#top" class="back-to-top">↑ Back to Top</a>
  </section>
 
-<section id="about-me">
-  <h2>About Me</h2>
-  <div class="section-grid">
-    
-    <!-- Left box – resume -->
-     <div class="box">
-      <h3>Resume</h3>
-      
-      <a href="https://www.linkedin.com/in/chefmyklove" target="_blank" rel="noopener">
-        <img src="images/trim.F71E249B-14C7-4321-8A97-DCE3E1209023.gif" 
-             alt="Animation for a more just future" 
-             style="width: 100%; height: 80%; max-height: 500px; object-fit: contain; border-radius: 12px; transition: transform 0.3s ease;">
-      </a>
-      
-      <p style="text-align: center; margin-top: 1rem;">
-        <a href="https://www.linkedin.com/in/chefmyklove" target="_blank" rel="noopener">
-          View Full Resume on LinkedIn →
-        </a>
-      </p>
-    </div>
-     <!-- Right box – Resume / GIF link -->
-    <div class="box">
-      <h3>My Journey</h3>
-      <p>A lifelong creative person, exploring media as diverse as sound sculpture, fibre art, painting, poetry and soap making, my practice currently exists at the intersection of photography, digital image manipulation, software and blockchain development, and community-engaged art-making. After three decades as a professional chef, a career-ending injury pushed me into software development—a shift that fundamentally changed how I think about creation itself—kick-starting an incredible new creative odyssey.</p>
-      
-      <p>I discovered that debugging code, like recipe development, is about transformation: taking ideas and raw materials and reshaping them into something new that provides a nourishing experience. Also that software development and technology are a medium for making things that scale, persist, and include. Code lets me turn ideas into interactive experiences. Now I work my creativity with digital illustration, interactive narrative design, and multi-faceted transmedia ecosystems, treating technology as both medium and collaborator in building more equitable creative ecosystems.</p>
-      
-      <p>What I see is that this tech is a studio, a megaphone, and a toolkit all in one! It amplifies creativity, helps to turn activism into practical systems, and opens sustainable paths for artists and communities to connect and thrive. The possibilities to further dissolve boundaries between us by using technology are endless...</p>
-      
-      <h3>And I'm on Board for THAT!!</h3>
-      
-      <img src="images/IMG_20201211_103947_047.png" 
-           alt="Portrait of Chef MyKLove" 
-           style="width: 100%; height: auto; border-radius: 10px; margin-top: 20px;">
-      
-      <p>As an artist, activist, and techno-futurist uncovering our collective potential to drive innovation and create a more equitable, inclusive future, I leverage my passions and skills to advocate for transformative social justice and radical change. Our deeply unjust world is riddled with systematic inequities that keep so many people marginalized, cut off from vital resources and opportunities. My mission is to find ways to help empower all of us harness our unique privileges, no matter our individual identities, to collectively drive the changes that will truly set us all free.</p>
-      
-      <p><strong>What “all that” looks like in practice:</strong></p>
-      <ul>
-        <li>Creative Advocacy: Develop art and tech projects, like interactive installations or apps, that amplify marginalized voices and challenge systemic inequities.</li>
-        <li>Inclusive Design: Create tools and platforms prioritizing accessibility, ensuring people of all abilities and backgrounds can engage and contribute.</li>
-        <li>Equitable Economic Systems: Build alternative revenue models, such as community-driven NFT platforms or micropayment systems, to empower creators and redistribute resources.</li>
-        <li>Civic Technology: Use technology to advocate for public goods, such as environmental justice, equitable access to resources, and inclusive public spaces.</li>
-        <li>Community Empowerment: Foster collaborative spaces where diverse groups can harness their unique strengths to co-create solutions for a more just future.</li>
-      </ul>
-      
-      <h3>Mission</h3>
-      <p><strong>I build tools, platforms, and creative experiences that dismantle gatekeeping, redistribute power and resources, and enable marginalized artists and communities to own their work, reach global audiences, and thrive—using code and blockchain as levers for real-world equity and collective liberation.</strong></p>
-      <h3>Blog</h3>
-      <!-- Patreon + Members-only Blog Section (real links included) -->
-<div style="margin-top: 2rem; text-align: center;">
-  <p>
-    <a href="https://www.patreon.com/ChefMyKLove" target="_blank" rel="noopener" 
-       class="widget-btn" style="display: inline-block; margin: 5px;">
-      Support on Patreon ❤️
-    </a>
-  </p>
-
-  <button id="openBlogModal" class="widget-btn" style="display: inline-block; margin: 5px;">
-    Access Members-Only Blog
-  </button>
-</div>
-    </div>
-  </div>
-</section>
+ <section id="whats-cooking">
+ <h2>What's Cooking?</h2>
+ <div class="section-grid">
+ <div class="box">
+ <h3>Capstone</h3>
+ <p>"Not Just Covid" working title. A resource portal (and maybe even marketplace) connecting clean air enthusiasts and advocates with resources supporting air quality justice.</p>
+ <img src="images/stop covid.png" alt="Stop COVID graphic" style="width: 100%; height: auto; border-radius: 10px;">
+ <p><a href="#not-just-covid">See More</a></p>
+ </div>
+ <div class="box">
+ <h3>ORDINAL RAINBOWS</h3>
+ <p>A large project focusing on integrating blockchain and art commerce. Patrons will mint their own Non Fungible Tokens (NFTs) from artists offering their work on the $BSV blockchain.  The ecosystem will also include an NFT generating game and a marketplace for trading these digital assets.</p>
+ <p><a href="#ordinal-rainbows">For More Info</a></p>
+ </div>
+ <div class="box">
+ <h3>Music Shuffle Algo</h3>
+ <p>I've been dreaming of building a shuffle music player that does it much better than existing solutions.  Still learning how to tweak algorythms for this purpose and just getting into developing API.... </p>
+ <p><a href="#whats-cooking">Details</a></p>
+ </div>
+ </div>
+ <a href="#top" class="back-to-top">↑ Back to Top</a>
+ </section>
 
  <section id="art-portal">
  <h2>Art Portal</h2>
@@ -230,23 +253,27 @@
  </div>
  <div class="section-grid">
  <div class="box">
- <h3>So In It For the IN Love</h3>
- <p>Original Imagery and Poetics by Chef MyKLove</p>
+ <h1 style="text-align: center;">Books</h1>
+ <p><b>So In It for the In Love</b></p>
  <img src="images/so in it.png" alt="Cover of 'So In It For the IN Love' book" style="width: 100%; height: auto; border-radius: 10px;">
  <p>"So in it for the In Love" is the first tome by Canadian artist and poet Chef MyKLove. The book,  published in, 2011, contains Love poems and other observations and is available as an ebook.  A second edition is in the works,that will include physical copies.</p>
  <p><a href="https://www.barnesandnoble.com/w/so-in-it-for-the-in-love-chef-myklove/1030162397">Buy Now</a></p>
+ <hr style="border: none; height: 6px; background: linear-gradient(to right, red, orange, yellow, green, cyan, blue, violet); margin: 40px 0; border-radius: 2px;">
+ <p><b>SpectralQuest: Rainbow Craft</b></p>
+ <img src="images/IMG_6909.JPEG" alt="SpectralQuest Rainbow Craft" style="width: 100%; height: auto; border-radius: 10px;">
+ <p>Coming soon:  The story of Lirien's quest to save the world and bring their cousin back from the clutches of their tyrant grandfather.  First part and accompanying game dropping Summer 2026.</p>
+ <a href="https://www.patreon.com/ChefMyKLove" target="_blank" rel="noopener" 
+       class="widget-btn" style="display: inline-block; margin: 5px;">
+      Be the First to Know - Join my Patreon! ❤️
+ </a>
+
  </div>
+ 
  <div class="box">
- <h3>Print Houses</h3>
- <p>There are several places you can go to buy prints or items adorned with my artwork.  Fine Art America or RedBubble are two that offer high-quality prints of some of my Digital artwork available for purchase.</p>
- <img src="images/glass splash.png" alt="Glass Splash digital artwork" style="width: 100%; height: auto; border-radius: 10px; display: block;">
- <p><a href="https://fineartamerica.com/profiles/chef-myklove">Fine Art America</a></p>
- <img src="images/thru the dream portal2.png" alt="Thru the Dream Portal digital artwork" style="width: 100%; height: auto; border-radius: 10px; display: block;">
- <p><a href="https://www.redbubble.com/people/ORDINALRAINBOWS/shop?asc=u">RedBubble</a></p>
- </div>
- <div class="box">
- <h3>NFTs</h3>
- <p>Soon there will be a place on the BSV Blockchain where you will be able to mint a unique Non-Fungible Token collectible of a Piece of my Digital Art. The long term vision is to create a comprehensive minting and trading ecosystem on the blockchain where many different artists will be able to offer collections of their work to mint on chain. Keep your eye on the <a href="#ordinal-rainbows">Ordinal Rainbows</a> space to keep updated.</p>
+ <h1 style="text-align: center;">NFTs</h1>
+ <p>Soon there will be a place on the BSV Blockchain where you will be able to mint unique Non-Fungible Token collectibles of my Digital Art.  Season 1 drops in June 2026 with many to follow. Some featuring guest artists.</p> 
+ <p>The long term vision is to create a comprehensive minting and trading ecosystem on the blockchain where many different artists will be able to offer collections of their work to mint on chain. Keep your eye on the <a href="#ordinal-rainbows">Ordinal Rainbows</a> space to keep updated.</p>
+ 
  <p><a href="#ordinal-rainbows">View Collection</a></p>
  </div>
  </div>
@@ -279,29 +306,6 @@
  <a href="#top" class="back-to-top">↑ Back to Top</a>
  </section>
 
- <section id="whats-cooking">
- <h2>What's Cooking?</h2>
- <div class="section-grid">
- <div class="box">
- <h3>Capstone</h3>
- <p>"Not Just Covid" working title. A resource portal (and maybe even marketplace) connecting clean air enthusiasts and advocates with resources supporting air quality justice.</p>
- <img src="images/stop covid.png" alt="Stop COVID graphic" style="width: 100%; height: auto; border-radius: 10px;">
- <p><a href="#not-just-covid">See More</a></p>
- </div>
- <div class="box">
- <h3>ORDINAL RAINBOWS</h3>
- <p>A large project focusing on integrating blockchain and art commerce. Patrons will mint their own Non Fungible Tokens (NFTs) from artists offering their work on the $BSV blockchain.  The ecosystem will also include an NFT generating game and a marketplace for trading these digital assets.</p>
- <p><a href="#ordinal-rainbows">For More Info</a></p>
- </div>
- <div class="box">
- <h3>Music Shuffle Algo</h3>
- <p>I've been dreaming of building a shuffle music player that does it much better than existing solutions.  Still learning how to tweak algorythms for this purpose and just getting into developing API.... </p>
- <p><a href="#whats-cooking">Details</a></p>
- </div>
- </div>
- <a href="#top" class="back-to-top">↑ Back to Top</a>
- </section>
-
  <section id="ordinal-rainbows">
  <h2>ORDINAL  RAINBOWS</h2>
  <div class="section-grid">
@@ -320,7 +324,7 @@
  <p>Season 1 mint is only the beginning. By 2027, The ORDINAL  RAINBOWS platform will be a full fledged 1sat Ordinals minting and trading platform, where users can mint their own collections or fungible tokens, Achieve ORDINAL  RAINBOWS game-generated artifacts, and trade any manner of collections on Bitcoin.</p>
  <img src="images/IMG_6909.JPEG" alt="Rainbow-inspired digital artwork" style="width: 100%; height: auto; border-radius: 10px;">
  <p><a href="#contact">Email Me</a></p>
- <img src="images/IMG_4570.jpg" alt="Rainbow-inspired digital artwork" style="width: 100%; height: auto; border-radius: 10px;">
+ <img src="images/HummingBow.jpg" alt="Rainbow-inspired digital artwork" style="width: 100%; height: auto; border-radius: 10px;">
  </div>
  </div>
  <a href="#top" class="back-to-top">↑ Back to Top</a>
@@ -351,9 +355,11 @@
    // Set backend URL for authentication
    const BACKEND_URL = 'https://portfolio-and-blog-production.up.railway.app';
  </script>
- <script src="interactivity.js"></script>
+ <script src="interactivity.js" defer></script>
+
 </body>
 </html>
 
- 
+
+ 
  

@@ -6,6 +6,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/auth');
 const membersRoutes = require('./routes/members');
+const printfulRoutes = require('./routes/printful');
 const db = require('./db/db');
 
 const app = express();
@@ -34,6 +35,7 @@ app.use(session({
 
 app.use('/auth', authRoutes);
 app.use('/api/members', membersRoutes);
+app.use('/api/printful', printfulRoutes);
 
 app.get('/', (req, res) => {
   res.json({ message: 'Backend server running', timestamp: new Date().toISOString() });
