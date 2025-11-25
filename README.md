@@ -285,6 +285,11 @@ created_at (TIMESTAMP)
 - [ ] Email notifications
 - [ ] Production deployment
 
+
+## Further Documentation
+
+For backend setup, API routes, and troubleshooting, see [backend/README.md](backend/README.md).
+
 ## License
 
 MIT
