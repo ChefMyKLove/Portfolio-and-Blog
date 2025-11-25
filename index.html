@@ -1,3 +1,9 @@
+<!--
+  Chef MyKLove Portfolio - Main Landing Page
+  Sections: Header, Weather Widget, Carousel, Music Player, About, Contact, Projects, Art Portal, Not Just Covid, Ordinal Rainbows
+  Navigation: Use anchor links or carousel cards to jump between sections.
+  Widgets: Weather, Music, Blog, Print Store
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +15,7 @@
  <link rel="stylesheet" href="carousel.css?v=2024112404">
 </head>
 <body>
+ <!-- Header: Site Title and Navigation -->
  <header id="top">
  <h1>Michael A. Needham</h1>
  <h3>Chef MyKLove - Digital Artist, Developer and Activist</h3>
@@ -25,6 +32,7 @@
  </nav>
  </header>
 
+ <!-- Main Widgets: Weather and Music -->
  <div class="widget-container">
  <div class="widget weather-widget">
  <h3>Weather</h3>
@@ -38,6 +46,7 @@
  </div>
  </div>
 
+ <!-- Art/Project Carousel -->
  <div class="carousel-container">
  <div class="carousel">
  <a href="#not-just-covid" class="card c1">
@@ -99,6 +108,7 @@
  </div>
  </div>
 
+<!-- About Me Section -->
 <section id="about-me">
   <h2>About Me</h2>
   <div class="section-grid">
@@ -165,6 +175,7 @@
   </div>
 </section>
 
+ <!-- Contact Section -->
  <section id="contact">
  <h2>Contact</h2>
  <div class="section-grid">
@@ -218,6 +229,7 @@
  <a href="#top" class="back-to-top">↑ Back to Top</a>
  </section>
 
+ <!-- What's Cooking? (Projects) -->
  <section id="whats-cooking">
  <h2>What's Cooking?</h2>
  <div class="section-grid">
@@ -241,6 +253,7 @@
  <a href="#top" class="back-to-top">↑ Back to Top</a>
  </section>
 
+ <!-- Art Portal Section -->
  <section id="art-portal">
  <h2>Art Portal</h2>
  <div class="art-carousel-container">
@@ -280,6 +293,7 @@
  <a href="#top" class="back-to-top">↑ Back to Top</a>
  </section>
 
+ <!-- Not Just Covid Section -->
  <section id="not-just-covid">
  <h2>Not Just Covid</h2>
  <div class="section-grid">
@@ -306,6 +320,7 @@
  <a href="#top" class="back-to-top">↑ Back to Top</a>
  </section>
 
+ <!-- Ordinal Rainbows Section -->
  <section id="ordinal-rainbows">
  <h2>ORDINAL  RAINBOWS</h2>
  <div class="section-grid">
@@ -330,7 +345,7 @@
  <a href="#top" class="back-to-top">↑ Back to Top</a>
  </section>
 
- <!-- Modal with real Patreon & blog links - OUTSIDE SECTIONS -->
+ <!-- Blog Modal (Patreon Members Only) -->
  <div id="blogModal" class="modal">
    <div class="modal-content">
      <span class="close">×</span>
@@ -347,6 +362,7 @@
    </div>
  </div>
 
+ <!-- Footer -->
  <footer>
  <p>© 2025 Michael A. Needham <a href="#contact" class="nav-button">Contact</a> for more information</p>
  </footer>
@@ -355,6 +371,7 @@
    // Set backend URL for authentication
    const BACKEND_URL = 'https://portfolio-and-blog-production.up.railway.app';
  </script>
+ <!-- Main JS for widgets and interactivity -->
  <script src="interactivity.js" defer></script>
 
 </body>

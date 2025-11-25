@@ -1,4 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
   // Firefox detection
   const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
   
@@ -149,8 +148,14 @@ document.addEventListener('DOMContentLoaded', () => {
     overlay.onclick = close;
   }
 
+//
+// interactivity.js - Main JS for widgets and interactive features
+// Sections: Notification, Weather Widget, Music Player, Carousel, Art Carousel, Email Modal, Blog Modal
+// Each widget is modular and can be found by searching for its name (e.g. WeatherWidget, MusicPlayer)
+//
+
   // ========================
-  // WEATHER WIDGET – GLOBAL + FIXED RANDOM + CLEAR INPUT
+  // WEATHER WIDGET (WeatherWidget)
   // ========================
   const WeatherWidget = {
     apiKey: '0e43eedf4557a8a6f0cd4a4a91d43751',
@@ -335,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // ========================
-  // MUSIC PLAYER (unchanged – perfect)
+  // MUSIC PLAYER (MusicPlayer)
   // ========================
   const MusicPlayer = {
     widget: null,
@@ -440,7 +445,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // ========================
-  // CAROUSEL, ART CAROUSEL, EMAIL MODAL (unchanged)
+  // CAROUSEL, ART CAROUSEL, EMAIL MODAL
   // ========================
   const Carousel = {
     init() {
@@ -672,7 +677,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // ===== MEMBERS-ONLY BLOG MODAL (safe to drop into existing project) =====
+  // ===== MEMBERS-ONLY BLOG MODAL =====
   (() => {
     // Bail if the elements don't exist yet (in case this script loads before the HTML)
     const openBtn = document.getElementById('openBlogModal');
@@ -710,7 +715,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   // ========================
-  // INITIALIZE
+  // INITIALIZE ALL WIDGETS
   // ========================
   WeatherWidget.init();
   MusicPlayer.init();

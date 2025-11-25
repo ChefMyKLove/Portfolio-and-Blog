@@ -1,45 +1,71 @@
-# Chef MyKLove Portfolio with Blog & Print Store
 
-A full-stack portfolio + members-only blog with Patreon OAuth authentication and Printify Pop-Up Store integration. Features glassmorphism design, animated cycling backgrounds, dynamic blog posts, secure member access, and print-on-demand artwork sales.
+# Chef MyKLove Interactive Portfolio
 
-## Project Structure
+An interactive portfolio website built with HTML, CSS, and JavaScript. Features include:
+- Weather widget (real-time, geolocation or city search)
+- Art and NFT carousel
+- SoundCloud music player
+- Members-only blog (with Patreon authentication)
+- Print-on-demand art store integration
+- Responsive, glassmorphism-inspired design
 
-```
-chefmyklove-portfolio/
-├── index.html               # Main portfolio landing page
-├── carousel.css             # Glassmorphism styling + animations
-├── interactivity.js         # Portfolio interactions + modals
-├── members.html             # Members redirect page
-├── PRINTIFY-SETUP.md        # Print store setup guide
-│
-├── images/                   # Artwork + background images
-│   ├── HummingBow.jpg       # Primary background image
-│   ├── TunnelBow.JPEG       # Featured artwork
-│   └── IMG_*.JPEG           # Carousel backgrounds (13 images)
-│
-├── blog/                     # Members-only blog
-│   ├── blook.html           # Blog interface
-│   ├── blook.js             # Blog logic
-│   ├── carousel.css         # Blog-specific styling
-│   └── images/              # Blog background images
-│
-├── backend/                  # Express API (Railway)
-│   ├── server.js            # Main server file
-│   ├── routes/
-│   │   ├── auth.js          # Patreon OAuth flow
-│   │   ├── members.js       # Protected routes
-│   │   └── printful.js      # Printful API (deprecated)
-│   ├── middleware/
-│   │   └── auth.js          # Authentication verification
-│   ├── db/
-│   │   ├── db.js            # PostgreSQL connection
-│   │   └── init.js          # Database schema setup
-│   ├── package.json
-│   └── .env                 # Environment variables (not committed)
-│
-└── docs/
-    └── SETUP.md             # Setup instructions
-```
+## File Guide
+
+**Main Files:**
+- `index.html` — Main landing page, navigation, widgets, and section anchors
+- `carousel.css` — Main site styles (glassmorphism, carousel, layout, backgrounds)
+- `interactivity.js` — Handles all interactive widgets (weather, music, modals, carousel)
+- `members.html` — Redirect/landing for members
+
+**Blog:**
+- `blog/blook.html` — Blog UI (posts, info pages, navigation)
+- `blog/blook.js` — Blog logic (rendering, localStorage, editing, navigation)
+- `blog/style.css` — Blog-specific styles (rainbow dates, layout, navigation)
+
+**Backend:**
+- `backend/server.js` — Express server (API, authentication)
+- `backend/routes/` — API endpoints (auth, members, printful)
+- `backend/middleware/` — Auth middleware
+- `backend/db/` — Database connection and schema
+
+**Other:**
+- `images/` — Artwork, backgrounds, and UI images
+- `docs/` — Setup and documentation
+- `PRINTIFY-SETUP.md` — Print store integration guide
+
+## How to Use
+
+1. Open `index.html` in your browser for the main portfolio and widgets.
+2. Use the navigation to explore art, music, and blog sections.
+3. The blog (`blog/blook.html`) is members-only (requires Patreon login if backend is running).
+4. Weather widget and music player work out-of-the-box (API keys may be needed for weather).
+
+## Features
+
+- **Weather Widget:** Real-time weather by city or geolocation
+- **Art Carousel:** Browse digital art and NFT previews
+- **Music Player:** SoundCloud playlist with shuffle
+- **Blog:** Write, edit, and read posts (members only)
+- **Print Store:** Order prints via Printify pop-up
+- **Responsive Design:** Mobile-friendly, animated backgrounds
+
+## Quick Setup
+
+1. Clone/download the project
+2. Open `index.html` in your browser
+3. For full functionality (blog auth, print store), see backend and API setup in `docs/SETUP.md`
+
+## Submission Checklist
+
+- [x] All files included and organized
+- [x] README updated and clear
+- [x] Code is commented for navigation and understanding
+- [x] One-page summary included (see `SUMMARY.md` if required)
+
+## Contact
+
+- Portfolio: https://chefmyklove.com
+- Patreon: https://patreon.com/chefmyklove
 
 ## Features
 
