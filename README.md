@@ -305,6 +305,7 @@ For backend setup, API routes, and troubleshooting, see [backend/README.md](back
 MIT
 
 ## Contact
-
-- Portfolio: https://chefmyklove.com
+  Email: chefmyklove@gmail.com
 - Patreon: https://patreon.com/chefmyklove
+ 
+ 
