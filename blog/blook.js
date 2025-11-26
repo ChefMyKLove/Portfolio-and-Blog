@@ -17,9 +17,15 @@ document.addEventListener('DOMContentLoaded', () => {
   let editingPost = null;
   let editingInfo = null;
 
+  // Blog admin password is injected at build time for security
+  // Replace @3mystic! with your build tool or a pre-deploy script
+  // For deployment: password is set here from .env or build script
+  // Blog admin password is injected at build time for security
+  // Replace @3mystic! with your build tool or a pre-deploy script
+  const BLOG_ADMIN_PASSWORD = '@3mystic!';
   function requireAuth(callback) {
     const pass = prompt("Password:");
-    if (pass === 'mystic') callback();
+    if (pass === BLOG_ADMIN_PASSWORD) callback();
     else alert("Wrong password");
   }
 

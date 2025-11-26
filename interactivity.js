@@ -659,7 +659,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }).catch(() => {}); // Ignore CORS redirect error
         
         // Show success immediately
-        showNotification('🎉 CHANGES APPLIED! Message sent! I\'ll reply soon. 🎉');
+        showNotification('🎉 Message sent! I\'ll reply soon. 🎉');
         modal.style.display = 'none';
         form.reset();
         

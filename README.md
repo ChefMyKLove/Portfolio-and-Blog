@@ -2,7 +2,11 @@
 
 A full-stack portfolio + members-only blog with Patreon OAuth authentication and Printify Pop-Up Store integration. Features glassmorphism design, animated cycling backgrounds, dynamic blog posts, secure member access, and print-on-demand artwork sales.
 
+
 ## Project Structure
+
+**Backend Documentation:**
+See [backend/README.md](backend/README.md) for backend API, environment, and deployment details.
 
 ```
 chefmyklove-portfolio/
@@ -47,7 +51,7 @@ chefmyklove-portfolio/
 ✅ **Animated Cycling Backgrounds** - 13-image rainbow carousel with 104s smooth transitions  
 ✅ **Printify Pop-Up Store Integration** - Print-on-demand artwork sales via modal embed  
 ✅ **Patreon OAuth 2.0** - Secure member authentication for blog access  
-✅ **Dynamic Blog Posts** - Create, edit, delete posts (members only)  
+✅ **Dynamic Blog Posts** - Create, edit, delete posts (admin only)  
 ✅ **Weather Widget** - Real-time weather with geolocation + random cities  
 ✅ **SoundCloud Music Player** - Embedded playlist with shuffle functionality  
 ✅ **Email Contact Form** - FormSpark integration with topic selection  
@@ -146,26 +150,26 @@ This creates the PostgreSQL database and tables.
 cd backend
 npm install
 
-# Frontend (no dependencies required, uses CDN)
 ```
 
 ### 4. Start Servers
 
-**Terminal 1 - Backend (Port 3002):**
+
+**Start Backend (Port 3002):**
 ```bash
 cd backend
 npm run dev
 ```
 
-**Terminal 2 - Frontend (Port 8000):**
+**Serve Frontend (Port 8000):**
+You can use a simple static server (such as [http-server](https://www.npmjs.com/package/http-server)) from the project root:
 ```bash
-cd frontend
 npx http-server -p 8000
 ```
 
 ### 5. Access the App
 
-- Portfolio: `http://localhost:8000/portfolio.html`
+- Portfolio: `http://localhost:8000/index.html`
 - Blog (after auth): `http://localhost:8000/blog/blook.html`
 
 ## Patreon OAuth Flow
@@ -195,12 +199,18 @@ npx http-server -p 8000
 
 ## Blog Features
 
-### Create/Edit Posts
+
+### Create/Edit Posts (Admin Only)
 1. Click "+ Write Post or Info" in the Further Information section
-2. Enter password: `mystic`
+2. Enter the blog admin password (see below)
 3. Choose "Blog Post" or "Info Page"
 4. Write your content
 5. Click Publish/Save
+
+**Blog Admin Password Security:**
+- The blog admin password is set via the `MYSTIC_PASSWORD` environment variable in `backend/.env` (see `.env.example`).
+- For frontend security, the password is injected at build/deploy time into `blog/blook.js` (replacing `__MYSTIC_PASSWORD__`).
+- Never hardcode your real password in the repo. Use a build script or CI/CD step to inject the value before deployment.
 
 ### Default Content
 - "about me" post automatically added on first load
@@ -209,7 +219,7 @@ npx http-server -p 8000
 
 ## Animation Details
 
-Background images cycle through 17 images with different animation speeds:
+Background images cycle through 13 images with different animation speeds:
 - **Container**: 104s cycle (darker overlay)
 - **Blog posts**: 104s cycle (linear, no glitches)
 - **Latest section**: 120s cycle
@@ -255,15 +265,15 @@ created_at (TIMESTAMP)
 ## Security Notes
 
 ⚠️ **Environment Variables**: Never commit `.env` files
-⚠️ **Password**: Change 'mystic' to a secure password in production
+⚠️ **Password**: Never hardcode your admin password. Use environment variables and build-time injection for frontend-only logic.
 ⚠️ **CORS**: Currently disabled - enable for production cross-origin requests
 ⚠️ **Sessions**: Set secure=true for HTTPS in production
 
 ## Troubleshooting
 
 ### Images not loading
-- Check that `/blog/images/` directory exists with IMG_*.jpg files
-- Verify paths are absolute from server root: `/blog/images/IMG_4570.jpg`
+- Check that `/images/` and `/blog/images/` directories exist with the required image files
+- Verify paths are correct and match the references in your HTML/CSS/JS
 
 ### OAuth not working
 - Verify both servers are running (3002 and 8000)

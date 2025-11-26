@@ -1,0 +1,25 @@
+{
+  "name": "chefmyklove-portfolio",
+  "version": "1.0.0",
+  "description": "A full-stack portfolio + members-only blog with Patreon OAuth authentication and Printify Pop-Up Store integration. Features glassmorphism design, animated cycling backgrounds, dynamic blog posts, secure member access, and print-on-demand artwork sales.",
+  "main": "interactivity.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "inject-password": "node inject-password.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chefmyklove/portfolio-and-blog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/chefmyklove/portfolio-and-blog/issues"
+  },
+  "homepage": "https://github.com/chefmyklove/portfolio-and-blog#readme",
+  "devDependencies": {
+    "dotenv-cli": "^11.0.0"
+  }
+}
