@@ -9,7 +9,15 @@ const InfoPage = require('../models/InfoPage');
 router.get('/posts', async (req, res) => {
   try {
     const posts = await Post.find().sort({ date: -1 });
-    res.json(posts);
+    // Map _id to id for frontend compatibility
+    const mapped = posts.map(post => ({
+      id: post._id.toString(),
+      title: post.title,
+      content: post.content,
+      date: post.date,
+      // Add any other fields you want to expose
+    }));
+    res.json(mapped);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -59,7 +67,15 @@ router.delete('/posts/:id', async (req, res) => {
 router.get('/info', async (req, res) => {
   try {
     const infoPages = await InfoPage.find().sort({ date: -1 });
-    res.json(infoPages);
+    // Map _id to id for frontend compatibility
+    const mapped = infoPages.map(info => ({
+      id: info._id.toString(),
+      name: info.name,
+      body: info.body,
+      date: info.date,
+      // Add any other fields you want to expose
+    }));
+    res.json(mapped);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
