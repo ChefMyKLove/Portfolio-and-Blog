@@ -1,3 +1,4 @@
+// Trigger redeploy: trivial change for Vercel
 document.addEventListener('DOMContentLoaded', () => {
   // Lazy load background images after page is ready
   setTimeout(() => {
@@ -15,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let posts = [];
   let infoPages = [];
   // Helper: API base URL (adjust if needed)
-  const API_BASE = '/api/blog';
+  const API_BASE = 'https://portfolio-and-blog-production.up.railway.app/api/blog';
 
   // Fetch posts and info pages from backend
   async function fetchPosts() {
