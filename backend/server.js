@@ -7,7 +7,10 @@ const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/auth');
 const membersRoutes = require('./routes/members');
 const printfulRoutes = require('./routes/printful');
-const db = require('./db/db');
+
+// MongoDB connection
+const connectDB = require('./db');
+connectDB();
 
 const app = express();
 app.set('trust proxy', 1); // Trust the first proxy
@@ -35,6 +38,9 @@ app.use(session({
 
 app.use('/auth', authRoutes);
 app.use('/api/members', membersRoutes);
+
+const blogRoutes = require('./routes/blog');
+app.use('/api/blog', blogRoutes);
 app.use('/api/printful', printfulRoutes);
 
 app.get('/', (req, res) => {

@@ -12,8 +12,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const loginRedirectBtn = document.getElementById('login-redirect-btn');
 
   // --- Start of original inline script logic ---
-  let posts = JSON.parse(localStorage.getItem('mysticPosts') || '[]');
-  let infoPages = JSON.parse(localStorage.getItem('mysticInfo') || '[]');
+  let posts = [];
+  let infoPages = [];
+  // Helper: API base URL (adjust if needed)
+  const API_BASE = '/api/blog';
+
+  // Fetch posts and info pages from backend
+  async function fetchPosts() {
+    const res = await fetch(`${API_BASE}/posts`);
+    posts = await res.json();
+  }
+  async function fetchInfoPages() {
+    const res = await fetch(`${API_BASE}/info`);
+    infoPages = await res.json();
+  }
+
+  // Initial load
+  async function loadBlogData() {
+    await fetchPosts();
+    await fetchInfoPages();
+    render();
+  }
   let editingPost = null;
   let editingInfo = null;
 
@@ -245,17 +264,26 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   window.closeEditor = function() { document.getElementById('editor').style.display = 'none'; }
-  window.savePost = function() {
+  window.savePost = async function() {
     const title = document.getElementById('post-title').value.trim();
     const content = document.getElementById('post-content').innerHTML.trim();
     if (!title || !content) return alert('Required');
     if (editingPost) {
-      const idx = posts.findIndex(p => p.id == editingPost);
-      posts[idx] = { ...posts[idx], title, content };
+      // Update post
+      await fetch(`${API_BASE}/posts/${editingPost}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, content })
+      });
     } else {
-      posts.unshift({ id: Date.now() + '', title, content, date: new Date().toISOString() });
+      // Create post
+      await fetch(`${API_BASE}/posts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, content })
+      });
     }
-    localStorage.setItem('mysticPosts', JSON.stringify(posts));
+    await fetchPosts();
     closeEditor();
     render();
     showHome();
@@ -271,10 +299,10 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('editor').style.display = 'flex';
     });
   }
-  window.deletePost = function() {
+  window.deletePost = async function() {
     if (confirm('Delete?')) {
-      posts = posts.filter(p => p.id != editingPost);
-      localStorage.setItem('mysticPosts', JSON.stringify(posts));
+      await fetch(`${API_BASE}/posts/${editingPost}`, { method: 'DELETE' });
+      await fetchPosts();
       closeEditor();
       render();
       showHome();
@@ -282,17 +310,24 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   window.closeInfoEditor = function() { document.getElementById('info-editor').style.display = 'none'; }
-  window.saveInfo = function() {
+  window.saveInfo = async function() {
     const name = document.getElementById('info-name').value.trim();
     const body = document.getElementById('info-body').innerHTML.trim();
     if (!name || !body) return alert('Required');
     if (editingInfo) {
-      const idx = infoPages.findIndex(p => p.id == editingInfo);
-      infoPages[idx] = { ...infoPages[idx], name, body };
+      await fetch(`${API_BASE}/info/${editingInfo}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, body })
+      });
     } else {
-      infoPages.unshift({ id: Date.now() + '', name, body });
+      await fetch(`${API_BASE}/info`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, body })
+      });
     }
-    localStorage.setItem('mysticInfo', JSON.stringify(infoPages));
+    await fetchInfoPages();
     closeInfoEditor();
     render();
   }
@@ -307,10 +342,10 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('info-editor').style.display = 'flex';
     });
   }
-  window.deleteInfo = function() {
+  window.deleteInfo = async function() {
     if (confirm('Delete?')) {
-      infoPages = infoPages.filter(p => p.id != editingInfo);
-      localStorage.setItem('mysticInfo', JSON.stringify(infoPages));
+      await fetch(`${API_BASE}/info/${editingInfo}`, { method: 'DELETE' });
+      await fetchInfoPages();
       closeInfoEditor();
       render();
     }
@@ -323,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // User is a patron, so show the content and hide the modal.
     if (contentWrapper) contentWrapper.style.display = 'block';
     if (accessDeniedModal) accessDeniedModal.style.display = 'none';
-    render(); // Render the blog content
+    loadBlogData(); // Fetch and render blog content
   } else {
     // User is not a patron, so hide the content and show the modal.
     if (contentWrapper) contentWrapper.style.display = 'none';
