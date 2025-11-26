@@ -68,10 +68,35 @@ chefmyklove-portfolio/
 
 **Backend:**
 - Node.js v24.11.0 + Express.js 4.18.2
-- PostgreSQL 18 (Railway hosted)
+- **MongoDB Atlas (blog content, via Mongoose)**
+- PostgreSQL 18 (Railway hosted, for legacy/member data)
 - Patreon API (OAuth 2.0)
 - express-session (server-side sessions)
 - Deployed: `https://portfolio-and-blog-production.up.railway.app`
+## MongoDB Blog Storage
+
+The blog now uses **MongoDB Atlas** for all post and info page storage, enabling cross-browser and cross-device persistence.
+
+### MongoDB Setup
+1. Go to [MongoDB Atlas](https://www.mongodb.com/atlas/database) and create a free cluster.
+2. Add a database user and password.
+3. Add your Railway backend's public IP or `0.0.0.0/0` to the Network Access whitelist.
+4. Get your connection string (looks like `mongodb+srv://<user>:<password>@cluster0.mongodb.net/<dbname>?retryWrites=true&w=majority`).
+5. In Railway, add an environment variable:
+  - **Key:** `MONGODB_URI`
+  - **Value:** (your connection string)
+6. Redeploy your backend.
+
+**Note:** The backend will log `MongoDB connected` on successful connection.
+
+### Required Environment Variable (Backend)
+```
+MONGODB_URI=mongodb+srv://<user>:<password>@cluster0.mongodb.net/<dbname>?retryWrites=true&w=majority
+```
+
+### Blog API
+- All `/api/blog/posts` and `/api/blog/info` endpoints now use MongoDB via Mongoose models.
+- The API returns objects with an `id` field (mapped from MongoDB's `_id`) for frontend compatibility.
 
 **Print Store:**
 - Printify Pop-Up Store (free tier)
@@ -134,14 +159,19 @@ PATREON_CLIENT_SECRET=your_client_secret
 DATABASE_URL=postgresql://postgres:password@localhost/chefmyklove_blog
 ```
 
+
 ### 2. Database Setup
 
+**MongoDB (Blog):**
+- Follow the MongoDB Setup steps above.
+- No manual table creation needed—Mongoose models auto-create collections.
+
+**PostgreSQL (Members/Legacy):**
 ```bash
 cd backend
 npm run setup-db
 ```
-
-This creates the PostgreSQL database and tables.
+This creates the PostgreSQL database and tables for member data.
 
 ### 3. Install Dependencies
 
@@ -307,5 +337,6 @@ MIT
 ## Contact
   Email: chefmyklove@gmail.com
 - Patreon: https://patreon.com/chefmyklove
- 
+
+ 
  
